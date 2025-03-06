@@ -1,3 +1,10 @@
 {
-  "files": {}
+  "files": {
+    "user-YaminaB-migration-status.csv": {
+      "id": "user/YaminaB/migration-status/5fb4000d",
+      "url": "https://www.opencodelists.org/codelist/user/YaminaB/migration-status/5fb4000d/",
+      "downloaded_at": "2025-03-05 16:59:11.491259Z",
+      "sha": "82297470ef55dca4ead6845c570d65dca260058c"
+    }
+  }
 }
