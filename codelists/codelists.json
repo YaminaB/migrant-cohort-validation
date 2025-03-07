@@ -1,5 +1,11 @@
 {
   "files": {
+    "opensafely-ethnicity-snomed-0removed.csv": {
+      "id": "opensafely/ethnicity-snomed-0removed/22911876",
+      "url": "https://www.opencodelists.org/codelist/opensafely/ethnicity-snomed-0removed/22911876/",
+      "downloaded_at": "2025-03-06 13:25:50.816165Z",
+      "sha": "d95a2f826299563aa57f6fa99009e6e13a65151b"
+    },
     "user-YaminaB-migration-status.csv": {
       "id": "user/YaminaB/migration-status/5fb4000d",
       "url": "https://www.opencodelists.org/codelist/user/YaminaB/migration-status/5fb4000d/",
