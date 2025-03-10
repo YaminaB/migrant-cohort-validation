@@ -46,3 +46,6 @@ dataset.latest_ethnicity_group = dataset.latest_ethnicity_code.to_category(
 )
 
 show(dataset)
+
+show(clinical_events.where(clinical_events.snomedct_code.is_in(ethnicity_codelist))
+     .snomedct_code)
