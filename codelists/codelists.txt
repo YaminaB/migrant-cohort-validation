@@ -1,2 +1,6 @@
-user/YaminaB/migration-status/5fb4000d
 opensafely/ethnicity-snomed-0removed/22911876/
+user/YaminaB/migration-status/1f473d49/
+user/YaminaB/born-outside-the-uk/0637ca14/
+user/YaminaB/uk-visa/4eb363bd/
+user/YaminaB/asylum-seeker-or-refugee/35a3f088/
+user/YaminaB/interpreter-required/3856b07e/

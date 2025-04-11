@@ -21,6 +21,7 @@ code,term
 1193634005,Born in Cabo Verde
 1231786003,Refugee healthcare service
 1254706008,Referral to language interpretation service
+1254713008,Requires language interpretation service to support health literacy
 1264278006,Iranian Persian language
 1289985008,History of medical injection in foreign country
 1300106003,Completed English as a second language program
@@ -280,7 +281,6 @@ code,term
 148642003,Examination of refugee
 153694008,Presence of interpreter
 153695009,Interpreter present
-153696005,Interpreter not present
 153703000,Need for interpreter
 153704006,Interpreter needed
 160509003,Immigrant
@@ -538,7 +538,6 @@ code,term
 171420007,Examination of refugee
 185513003,Presence of interpreter
 185514009,Interpreter present
-185515005,Interpreter not present
 185522002,Need for interpreter
 185523007,Interpreter needed
 185711000000100,Family reunion immigrant
@@ -721,7 +720,6 @@ code,term
 224619008,Migrant
 224628009,Hinko language
 271495005,[V]Health examination of defined subpopulation
-276161000000101,Interpreter not available
 276171000000108,Interpreter not available 
 276181000000105,Interpreter not available 
 297289008,World languages
@@ -1364,7 +1362,6 @@ code,term
 313422009,Mirpuri language
 314430004,Presence of interpreter
 314431000,Interpreter present
-314432007,Interpreter not present
 315355003,Country of birth - European
 315356002,Country of birth - Asian
 315357006,Country of birth - American continent
@@ -2191,11 +2188,10 @@ code,term
 408534005,Main spoken language Patois
 408535006,Main spoken language Serbian
 411771000000105,[V]Health examination of defined subpopulation
-413309001,No adult family member literate in English
 413323004,Refugee family
 414640006,Main spoken language Finnish
 416625007,Family reunion immigrant
-426201006,Interpreter not available
+423785008,Provision of interpreter/translator services
 438566004,Occitan language
 438893008,Inupiaq language
 439222005,Kalaallisut language
@@ -2547,6 +2543,7 @@ code,term
 734998001,Victim of human trafficking
 735204006,Born in Serbia
 736790000,Interpreter booked
+745664000,Requires telephone language interpreter service
 748241000000103,Unaccompanied child asylum seeker
 750491000000109,Born in Democratic Republic of Congo
 753851000000106,Main spoken language Tetum
@@ -2555,8 +2552,6 @@ code,term
 753901000000102,Main spoken language Konkani 
 755081000000105,Main spoken language Dari
 755091000000107,Main spoken language Dari 
-759691000000101,Interpreter declined
-759701000000101,Patient declined interpreter 
 768761000000104,Born in Aruba
 768771000000106,Born in Aruba 
 787661000000108,Interpreter booked

@@ -1,0 +1,509 @@
+code,term
+1047281000000107,Does not speak English
+1047301000000108,Does not read English
+1047321000000104,Romany language interpreter needed
+1050791000000101,Romany language interpreter needed
+1254713008,Requires language interpretation service to support health literacy
+1300106003,Completed English as a second language program
+153694008,Presence of interpreter
+153695009,Interpreter present
+153703000,Need for interpreter
+153704006,Interpreter needed
+185513003,Presence of interpreter
+185514009,Interpreter present
+185522002,Need for interpreter
+185523007,Interpreter needed
+203281000000104,Akan language interpreter needed
+203291000000102,Albanian language interpreter needed
+203301000000103,Amharic language interpreter needed
+203311000000101,Arabic language interpreter needed
+203321000000107,Bengali language interpreter needed
+203371000000106,Italian language interpreter needed
+203381000000108,Cantonese language interpreter needed
+203391000000105,Croatian language interpreter needed
+203401000000108,Czech language interpreter needed
+203411000000105,Dutch language interpreter needed
+203421000000104,Persian language interpreter needed
+203441000000106,French language interpreter needed
+203521000000103,French Creole language interpreter needed
+203531000000101,Igbo language interpreter needed
+203581000000102,German language interpreter needed
+203591000000100,Greek language interpreter needed
+203601000000106,Gujarati language interpreter needed
+203611000000108,Hakka language interpreter needed
+203631000000100,Hausa language interpreter needed
+203641000000109,Hebrew language interpreter needed
+203651000000107,Hindi language interpreter needed
+203681000000101,Japanese language interpreter needed
+203691000000104,Korean language interpreter needed
+203701000000104,Kurdish language interpreter needed
+203711000000102,Lingala language interpreter needed
+203721000000108,Lithuanian language interpreter needed
+203801000000105,Ganda language interpreter needed
+203811000000107,Malayalam language interpreter needed
+203821000000101,Mandarin language interpreter needed
+203831000000104,Norwegian language interpreter needed
+203841000000108,Pashto language interpreter needed
+203901000000102,Polish language interpreter needed
+203911000000100,Portuguese language interpreter needed
+203961000000103,Panjabi language interpreter needed
+203971000000105,Russian language interpreter needed
+203981000000107,Serbian language interpreter needed
+203991000000109,Shona language interpreter needed
+204011000000102,Sinhala language interpreter needed
+204021000000108,Somali language interpreter needed
+204031000000105,Spanish language interpreter needed
+204041000000101,Swahili language interpreter needed
+204051000000103,Swedish language interpreter needed
+204081000000109,Sylheti language interpreter needed
+204111000000101,Tagalog language interpreter needed
+204131000000109,Tamil language interpreter needed
+204151000000102,Thai language interpreter needed
+204171000000106,Tigrinya language interpreter needed
+204191000000105,Turkish language interpreter needed
+204201000000107,Ukrainian language interpreter needed
+204211000000109,Urdu language interpreter needed
+204221000000103,Vietnamese language interpreter needed
+204241000000105,Yoruba language interpreter needed
+208801000000102,Interpreter needed - Portuguese
+208811000000100,Interpreter needed - Portuguese
+208841000000104,Interpreter needed - Panjabi
+208851000000101,Interpreter needed - Panjabi
+208861000000103,Interpreter needed - Russian
+208871000000105,Interpreter needed - Russian
+208881000000107,Interpreter needed - Serbian
+208891000000109,Interpreter needed - Serbian
+208901000000105,Interpreter needed - Shona
+208911000000107,Interpreter needed - Shona
+208981000000100,Interpreter needed - Sinhala
+208991000000103,Interpreter needed - Sinhala
+209001000000103,Interpreter needed - Somali
+209011000000101,Interpreter needed - Somali
+209021000000107,Interpreter needed - Spanish
+209031000000109,Interpreter needed - Spanish
+209041000000100,Interpreter needed - Swahili
+209051000000102,Interpreter needed - Swahili
+209061000000104,Interpreter needed - Swedish
+209071000000106,Interpreter needed - Swedish
+209091000000105,Interpreter needed - Sylheti
+209101000000102,Interpreter needed - Sylheti
+209151000000101,Interpreter needed - Tagalog
+209161000000103,Interpreter needed - Tagalog
+209191000000109,Interpreter needed - Tamil
+209201000000106,Interpreter needed - Tamil
+209231000000100,Interpreter needed - Thai
+209241000000109,Interpreter needed - Thai
+209261000000105,Interpreter needed - Tigrinya
+209271000000103,Interpreter needed - Tigrinya
+209291000000104,Interpreter needed - Turkish
+209301000000100,Interpreter needed - Turkish
+209311000000103,Interpreter needed - Ukrainian
+209321000000109,Interpreter needed - Ukrainian
+209331000000106,Interpreter needed - Urdu
+209341000000102,Interpreter needed - Urdu
+209351000000104,Interpreter needed - Vietnamese
+209361000000101,Interpreter needed - Vietnamese
+209391000000107,Interpreter needed - Yoruba
+209401000000105,Interpreter needed - Yoruba
+210781000000104,Interpreter needed - Akan
+210791000000102,Interpreter needed - Akan
+210801000000103,Interpreter needed - Albanian
+210811000000101,Interpreter needed - Albanian
+210821000000107,Interpreter needed - Amharic
+210831000000109,Interpreter needed - Amharic
+210841000000100,Interpreter needed - Arabic
+210851000000102,Interpreter needed - Arabic
+210861000000104,Interpreter needed - Bengali
+210871000000106,Interpreter needed - Bengali
+210881000000108,Interpreter needed - Italian
+210891000000105,Interpreter needed - Italian
+210901000000106,Interpreter needed - Cantonese
+210911000000108,Interpreter needed - Cantonese
+210921000000102,Interpreter needed - Croatian
+210931000000100,Interpreter needed - Croatian
+210941000000109,Interpreter needed - Czech
+210951000000107,Interpreter needed - Czech
+210961000000105,Interpreter needed - Dutch
+210971000000103,Interpreter needed - Dutch
+210981000000101,Interpreter needed - Farsi
+210991000000104,Interpreter needed - Farsi
+211001000000100,Interpreter needed - French
+211011000000103,Interpreter needed - French
+211041000000102,Interpreter needed - French Creole
+211051000000104,Interpreter needed - French Creole
+211061000000101,Interpreter needed - Igbo
+211071000000108,Interpreter needed - Igbo
+211101000000104,Interpreter needed - German
+211111000000102,Interpreter needed - German
+211121000000108,Interpreter needed - Greek
+211131000000105,Interpreter needed - Greek
+211141000000101,Interpreter needed - Gujarati
+211151000000103,Interpreter needed - Gujarati
+211161000000100,Interpreter needed - Hakka
+211171000000107,Interpreter needed - Hakka
+211181000000109,Interpreter needed - Hausa
+211191000000106,Interpreter needed - Hausa
+211201000000108,Interpreter needed - Hebrew
+211211000000105,Interpreter needed - Hebrew
+211221000000104,Interpreter needed - Hindi
+211231000000102,Interpreter needed - Hindi
+211261000000107,Interpreter needed - Japanese
+211271000000100,Interpreter needed - Japanese
+211281000000103,Interpreter needed - Korean
+211291000000101,Interpreter needed - Korean
+211301000000102,Interpreter needed - Kurdish
+211311000000100,Interpreter needed - Kurdish
+211321000000106,Interpreter needed - Lingala
+211331000000108,Interpreter needed - Lingala
+211341000000104,Interpreter needed - Lithuanian
+211351000000101,Interpreter needed - Lithuanian
+211461000000106,Interpreter needed - Ganda
+211471000000104,Interpreter needed - Ganda
+211481000000102,Interpreter needed - Malayalam
+211491000000100,Interpreter needed - Malayalam
+211501000000106,Interpreter needed - Mandarin
+211511000000108,Interpreter needed - Mandarin
+211521000000102,Interpreter needed - Norwegian
+211531000000100,Interpreter needed - Norwegian
+211551000000107,Interpreter needed - Pashto
+211561000000105,Interpreter needed - Pashto
+211641000000108,Interpreter needed - Polish
+211671000000102,Interpreter needed - Polish
+303601000000100,Telephone interpreting service used
+314431000,Interpreter present
+315593009,Need for interpreter
+315594003,Interpreter needed
+343701000000103,Finnish language interpreter needed
+343711000000101,Flemish language interpreter needed
+343771000000106,Kutchi language interpreter needed
+352901000000108,Slovak language interpreter needed
+352931000000102,Ndebele language interpreter needed
+353881000000101,Romanian language interpreter needed
+353891000000104,Interpreter needed - Romanian 
+353901000000103,Interpreter needed - Romanian 
+353921000000107,Bulgarian language interpreter needed
+353931000000109,Interpreter needed - Bulgarian 
+353941000000100,Interpreter needed - Bulgarian 
+359621000000100,Interpreter needed for language N-Z
+359631000000103,Interpreter needed for language A-M
+359641000000107,Mongolian language interpreter needed
+359651000000105,Mongolian language interpreter needed 
+359661000000108,Mongolian language interpreter needed 
+359671000000101,Moldavian language interpreter needed
+359681000000104,Moldavian language interpreter needed 
+359691000000102,Moldavian language interpreter needed 
+359701000000102,Marathi language interpreter needed
+359711000000100,Marathi language interpreter needed 
+359721000000106,Marathi language interpreter needed 
+359731000000108,Maltese language interpreter needed
+359741000000104,Maltese language interpreter needed 
+359751000000101,Maltese language interpreter needed 
+359761000000103,Luganda language interpreter needed
+359771000000105,Luganda language interpreter needed 
+359781000000107,Luganda language interpreter needed 
+359791000000109,Ethiopian language interpreter needed
+359801000000108,Ethiopian language interpreter needed 
+359811000000105,Ethiopian language interpreter needed 
+359821000000104,Brawa language interpreter needed
+359831000000102,Brawa language interpreter needed 
+359841000000106,Brawa language interpreter needed 
+359851000000109,Kirghiz language interpreter needed
+359861000000107,Kirghiz language interpreter needed 
+359871000000100,Kirghiz language interpreter needed 
+359881000000103,Iban language interpreter needed
+359891000000101,Iba language interpreter needed 
+359901000000100,Iba language interpreter needed 
+359911000000103,Maori language interpreter needed
+359921000000109,Maori language interpreter needed 
+359931000000106,Maori language interpreter needed 
+359971000000108,Macedonian language interpreter needed
+359981000000105,Macedonian language interpreter needed 
+359991000000107,Macedonian language interpreter needed 
+360011000000101,Malagasy language interpreter needed
+360021000000107,Malagasy language interpreter needed 
+360031000000109,Malagasy language interpreter needed 
+360071000000106,Latvian language interpreter needed
+360081000000108,Latvian language interpreter needed 
+360091000000105,Latvian language interpreter needed 
+360101000000102,Kannada language interpreter needed
+360111000000100,Kannada language interpreter needed 
+360121000000106,Kannada language interpreter needed 
+360131000000108,Kinyarwanda language interpreter needed
+360141000000104,Kinyarwanda language interpreter needed 
+360151000000101,Kinyarwanda language interpreter needed 
+360161000000103,Malay language interpreter needed
+360171000000105,Malay language interpreter needed 
+360181000000107,Malay language interpreter needed 
+360191000000109,Kashmiri language interpreter needed
+360201000000106,Kashmiri language interpreter needed 
+360211000000108,Kashmiri language interpreter needed 
+360221000000102,Kazakh language interpreter needed
+360231000000100,Kazakh language interpreter needed 
+360241000000109,Kazakh language interpreter needed 
+360251000000107,Inupiaq language interpreter needed
+360261000000105,Inupiaq language interpreter needed 
+360271000000103,Inupiaq language interpreter needed 
+360281000000101,Javanese language interpreter needed
+360291000000104,Javanese language interpreter needed 
+360301000000100,Javanese language interpreter needed 
+360311000000103,Inuktitut language interpreter needed
+360341000000102,Interlingue language interpreter needed
+360351000000104,Interlingue language interpreter needed 
+360361000000101,Interlingue language interpreter needed 
+360371000000108,Lao language interpreter needed
+360381000000105,Lao language interpreter needed 
+360391000000107,Lao language interpreter needed 
+360401000000105,Icelandic language interpreter needed
+360411000000107,Icelandic language interpreter needed 
+360421000000101,Icelandic language interpreter needed 
+360431000000104,Hungarian language interpreter needed
+360441000000108,Hungarian language interpreter needed 
+360451000000106,Hungarian language interpreter needed 
+361441000000100,Guarani language interpreter needed
+361451000000102,Guarani language interpreter needed 
+361461000000104,Guarani language interpreter needed 
+361471000000106,Georgian language interpreter needed
+361481000000108,Georgian language interpreter needed 
+361491000000105,Georgian language interpreter needed 
+361501000000104,Frisian language interpreter needed
+361511000000102,Frisian language interpreter needed 
+361521000000108,Frisian language interpreter needed 
+361791000000100,Faroese language interpreter needed
+361801000000101,Faeroese language interpreter needed 
+361811000000104,Faeroese language interpreter needed 
+361821000000105,Fijian language interpreter needed
+361831000000107,Fijian language interpreter needed 
+361841000000103,Fijian language interpreter needed 
+361851000000100,Galician language interpreter needed
+361861000000102,Galician language interpreter needed 
+361871000000109,Galician language interpreter needed 
+361881000000106,Esperanto language interpreter needed
+361891000000108,Esperanto language interpreter needed 
+361901000000109,Esperanto language interpreter needed 
+361911000000106,Estonian language interpreter needed
+361921000000100,Estonian language interpreter needed 
+361931000000103,Estonian language interpreter needed 
+361941000000107,Corsican language interpreter needed
+361951000000105,Corsican language interpreter needed 
+361961000000108,Corsican language interpreter needed 
+361971000000101,Danish language interpreter needed
+361981000000104,Danish language interpreter needed 
+361991000000102,Danish language interpreter needed 
+362011000000102,Kalaallisut language interpreter needed
+362021000000108,Kalaallisut language interpreter needed 
+362031000000105,Kalaallisut language interpreter needed 
+362041000000101,Catalan language interpreter needed
+362051000000103,Catalan language interpreter needed 
+362061000000100,Catalan language interpreter needed 
+362071000000107,Belarusian language interpreter needed
+362081000000109,Belarusian language interpreter needed 
+362091000000106,Belarusian language interpreter needed 
+362111000000101,Indonesian language interpreter needed
+362121000000107,Indonesian language interpreter needed 
+362131000000109,Indonesian language interpreter needed 
+362141000000100,Breton language interpreter needed
+362151000000102,Breton language interpreter needed 
+362161000000104,Breton language interpreter needed 
+362171000000106,Bislama language interpreter needed
+362181000000108,Bislama language interpreter needed 
+362191000000105,Bislama language interpreter needed 
+362201000000107,Bihari language interpreter needed
+362211000000109,Bihari language interpreter needed 
+362221000000103,Bihari language interpreter needed 
+362231000000101,Assamese language interpreter needed
+362241000000105,Assamese language interpreter needed 
+362251000000108,Assamese language interpreter needed 
+362261000000106,Armenian language interpreter needed
+362271000000104,Armenian language interpreter needed 
+362281000000102,Armenian language interpreter needed 
+362331000000107,Central Khmer language interpreter needed
+362341000000103,Central Khmer language interpreter needed 
+362351000000100,Central Khmer language interpreter needed 
+362371000000109,Burmese language interpreter needed
+362381000000106,Burmese language interpreter needed 
+362391000000108,Burmese language interpreter needed 
+362541000000108,Aymara language interpreter needed
+362551000000106,Aymara language interpreter needed 
+362561000000109,Aymara language interpreter needed 
+362571000000102,Afrikaans language interpreter needed
+362581000000100,Afrikaans language interpreter needed 
+362591000000103,Afrikaans language interpreter needed 
+362611000000106,Azerbaijani language interpreter needed
+362621000000100,Azerbaijani language interpreter needed 
+362631000000103,Azerbaijani language interpreter needed 
+362641000000107,Basque language interpreter needed
+362651000000105,Basque language interpreter needed 
+362661000000108,Basque language interpreter needed 
+362691000000102,Afar language interpreter needed
+362701000000102,Afar language interpreter needed 
+362711000000100,Afar language interpreter needed 
+362721000000106,Abkhazian language interpreter needed
+362731000000108,Abkhazian language interpreter needed 
+362741000000104,Abkhazian language interpreter needed 
+362781000000107,Dzongkha language interpreter needed
+362791000000109,Dzongkha language interpreter needed 
+362801000000108,Dzongkha language interpreter needed 
+362821000000104,Zulu language interpreter needed
+362831000000102,Zulu language interpreter needed 
+362841000000106,Zulu language interpreter needed 
+362911000000103,Zhuang language interpreter needed
+362921000000109,Zhuang language interpreter needed 
+362931000000106,Zhuang language interpreter needed 
+362961000000101,Uzbek language interpreter needed
+362971000000108,Uzbek language interpreter needed 
+362981000000105,Uzbek language interpreter needed 
+362991000000107,Oromo language interpreter needed
+363001000000106,Oromo language interpreter needed 
+363011000000108,Oromo language interpreter needed 
+363021000000102,Yiddish language interpreter needed
+363031000000100,Yiddish language interpreter needed 
+363041000000109,Yiddish language interpreter needed 
+363061000000105,Rundi language interpreter needed
+363071000000103,Rundi language interpreter needed 
+363081000000101,Rundi language interpreter needed 
+363141000000105,Tibetan language interpreter needed
+363151000000108,Tibetan language interpreter needed 
+363161000000106,Tibetan language interpreter needed 
+363181000000102,Tsonga language interpreter needed
+363191000000100,Tsonga language interpreter needed 
+363201000000103,Tsonga language interpreter needed 
+363221000000107,Tatar language interpreter needed
+363231000000109,Tatar language interpreter needed 
+363241000000100,Tatar language interpreter needed 
+363301000000109,Twi language interpreter needed
+363311000000106,Twi language interpreter needed 
+363321000000100,Twi language interpreter needed 
+363341000000107,Telugu language interpreter needed
+363351000000105,Telugu language interpreter needed 
+363361000000108,Telugu language interpreter needed 
+363461000000100,Tongan language interpreter needed
+363471000000107,Tongan language interpreter needed 
+363481000000109,Tongan language interpreter needed 
+363551000000104,Turkmen language interpreter needed
+363561000000101,Turkmen language interpreter needed 
+363571000000108,Turkmen language interpreter needed 
+363591000000107,Slovenian language interpreter needed
+363601000000101,Slovenian language interpreter needed 
+363611000000104,Slovenian language interpreter needed 
+363621000000105,Swati language interpreter needed
+363631000000107,Swati language interpreter needed 
+363641000000103,Swati language interpreter needed 
+363651000000100,Southern Sotho language interpreter needed
+363661000000102,Southern Sotho language interpreter needed 
+363671000000109,Southern Sotho language interpreter needed 
+363681000000106,Tajik language interpreter needed
+363691000000108,Tajik language interpreter needed 
+363701000000108,Tajik language interpreter needed 
+363711000000105,Sindhi language interpreter needed
+363721000000104,Sindhi language interpreter needed 
+363731000000102,Sindhi language interpreter needed 
+363781000000103,Sundanese language interpreter needed
+363791000000101,Sundanese language interpreter needed 
+363801000000102,Sundanese language interpreter needed 
+363841000000104,Samoan language interpreter needed
+363851000000101,Samoan language interpreter needed 
+363861000000103,Samoan language interpreter needed 
+363941000000108,Tswana language interpreter needed
+363951000000106,Tswana language interpreter needed 
+363961000000109,Tswana language interpreter needed 
+364011000000105,Quechua language interpreter needed
+364021000000104,Quechua language interpreter needed 
+364031000000102,Quechua language interpreter needed 
+364051000000109,Sango language interpreter needed
+364061000000107,Sango language interpreter needed 
+364071000000100,Sango language interpreter needed 
+364141000000107,Uighur language interpreter needed
+364151000000105,Uighur language interpreter needed 
+364161000000108,Uighur language interpreter needed 
+364211000000103,Oriya language interpreter needed
+364221000000109,Oriya language interpreter needed 
+364231000000106,Oriya language interpreter needed 
+364251000000104,Nepali language interpreter needed
+364261000000101,Nepali language interpreter needed 
+364271000000108,Nepali language interpreter needed 
+364311000000108,Occitan language interpreter needed
+364321000000102,Occitan language interpreter needed 
+364331000000100,Occitan language interpreter needed 
+364351000000107,Nauru language interpreter needed
+364361000000105,Nauru language interpreter needed 
+364371000000103,Nauru language interpreter needed 
+364481000000106,Romansh language interpreter needed
+364491000000108,Romansh language interpreter needed 
+364501000000102,Romansh language interpreter needed 
+364511000000100,Xhosa language interpreter needed
+364521000000106,Xhosa language interpreter needed 
+364531000000108,Xhosa language interpreter needed 
+369341000000105,Interpreter needed 
+369351000000108,Interpreter needed 
+370261000000100,Interpreter needed 
+370271000000107,Interpreter needed 
+413309001,No adult family member literate in English
+423785008,Provision of interpreter/translator services
+445075008,Request for language interpreter service
+521521000000104,Request for language interpreter service
+621391000124107,Referral to English as a second language program
+736790000,Interpreter booked
+745664000,Requires telephone language interpreter service
+787661000000108,Interpreter booked
+787671000000101,Interpreter booked 
+802371000000105,Requires telephone language interpreter service
+812621000000103,Request for telephone language interpreter service
+945731000000104,Hands-on signing interpreter needed
+972511000000109,Aragonese interpreter needed
+972521000000103,Avaric interpreter needed
+972531000000101,Avestan interpreter needed
+972541000000105,Bambara interpreter needed
+972551000000108,Bashkir interpreter needed
+972561000000106,Bosnian interpreter needed
+972571000000104,Chamorro interpreter needed
+972581000000102,Chechen interpreter needed
+972591000000100,Chinese interpreter needed
+972601000000106,Church Slavic interpreter needed
+972611000000108,Chuvash interpreter needed
+972631000000100,Cree interpreter needed
+972641000000109,Dhivehi interpreter needed
+972651000000107,Ewe interpreter needed
+972671000000103,Fulah interpreter needed
+972681000000101,Haitian interpreter needed
+972691000000104,Herero interpreter needed
+972701000000104,Hiri Motu interpreter needed
+972711000000102,Ido interpreter needed
+972721000000108,Interlingua interpreter needed
+972731000000105,Irish interpreter needed
+972741000000101,Kanuri interpreter needed
+972751000000103,Kikuyu interpreter needed
+972771000000107,Komi interpreter needed
+972781000000109,Kongo interpreter needed
+972791000000106,Kuanyama interpreter needed
+972801000000105,Latin interpreter needed
+972811000000107,Limburgan interpreter needed
+972821000000101,Luba-Katanga interpreter needed
+972831000000104,Luxembourgish interpreter needed
+972851000000106,Manx interpreter needed
+972861000000109,Marshallese interpreter needed
+972881000000100,Navajo interpreter needed
+972891000000103,Ndonga interpreter needed
+972911000000100,North Ndebele interpreter needed
+972921000000106,Northern Sami interpreter needed
+972931000000108,Norwegian Bokmål interpreter needed
+972941000000104,Norwegian Nynorsk interpreter needed
+972951000000101,Nyanja interpreter needed
+972981000000107,Ojibwa interpreter needed
+973001000000108,Ossetian interpreter needed
+973011000000105,Pali interpreter needed
+973031000000102,Sanskrit interpreter needed
+973041000000106,Sardinian interpreter needed
+973051000000109,Scottish Gaelic interpreter needed
+973061000000107,Serbo-Croatian interpreter needed
+973071000000100,Nuosu interpreter needed
+973081000000103,South Ndebele interpreter needed
+973101000000109,Tahitian interpreter needed
+973121000000100,Venda interpreter needed
+973131000000103,Volapük interpreter needed
+973141000000107,Walloon interpreter needed
+973151000000105,Western Frisian interpreter needed
+973161000000108,Wolof interpreter needed
+974861000000102,Interpreter needed for language T - Z
+974871000000109,Interpreter needed for language N - S
+974881000000106,Interpreter needed for language G - M
+974891000000108,Interpreter needed for language A - F
