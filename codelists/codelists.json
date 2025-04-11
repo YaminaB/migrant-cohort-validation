@@ -1,16 +1,40 @@
 {
   "files": {
-    "opensafely-ethnicity-snomed-0removed.csv": {
-      "id": "opensafely/ethnicity-snomed-0removed/22911876",
-      "url": "https://www.opencodelists.org/codelist/opensafely/ethnicity-snomed-0removed/22911876/",
-      "downloaded_at": "2025-03-06 13:25:50.816165Z",
-      "sha": "d95a2f826299563aa57f6fa99009e6e13a65151b"
+    "user-YaminaB-interpreter-required.csv": {
+      "id": "user/YaminaB/interpreter-required/3856b07e",
+      "url": "https://www.opencodelists.org/codelist/user/YaminaB/interpreter-required/3856b07e/",
+      "downloaded_at": "2025-04-11 08:10:05.759560Z",
+      "sha": "344fee4358ef72a61fd0b0a8527aba0b90457cb7"
+    },
+    "user-YaminaB-asylum-seeker-or-refugee.csv": {
+      "id": "user/YaminaB/asylum-seeker-or-refugee/35a3f088",
+      "url": "https://www.opencodelists.org/codelist/user/YaminaB/asylum-seeker-or-refugee/35a3f088/",
+      "downloaded_at": "2025-04-11 08:09:49.346536Z",
+      "sha": "ecd46bc32ff596afcb298dc249588fbe0efc907b"
+    },
+    "user-YaminaB-uk-visa.csv": {
+      "id": "user/YaminaB/uk-visa/4eb363bd",
+      "url": "https://www.opencodelists.org/codelist/user/YaminaB/uk-visa/4eb363bd/",
+      "downloaded_at": "2025-04-11 08:09:33.403155Z",
+      "sha": "8e536d9c24bbb4550690353c0ca7b9665915a8ce"
+    },
+    "user-YaminaB-born-outside-the-uk.csv": {
+      "id": "user/YaminaB/born-outside-the-uk/0637ca14",
+      "url": "https://www.opencodelists.org/codelist/user/YaminaB/born-outside-the-uk/0637ca14/",
+      "downloaded_at": "2025-04-11 08:09:08.911168Z",
+      "sha": "f73120789fff7d9053ff8b5b8874bdd0145f5282"
     },
     "user-YaminaB-migration-status.csv": {
       "id": "user/YaminaB/migration-status/5fb4000d",
       "url": "https://www.opencodelists.org/codelist/user/YaminaB/migration-status/5fb4000d/",
       "downloaded_at": "2025-03-05 16:59:11.491259Z",
       "sha": "82297470ef55dca4ead6845c570d65dca260058c"
+    },
+    "opensafely-ethnicity-snomed-0removed.csv": {
+      "id": "opensafely/ethnicity-snomed-0removed/22911876",
+      "url": "https://www.opencodelists.org/codelist/opensafely/ethnicity-snomed-0removed/22911876/",
+      "downloaded_at": "2025-03-06 13:25:50.816165Z",
+      "sha": "d95a2f826299563aa57f6fa99009e6e13a65151b"
     }
   }
 }
