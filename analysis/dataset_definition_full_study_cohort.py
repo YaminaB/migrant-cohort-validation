@@ -138,10 +138,9 @@ dataset.imd_quintile = address.imd_quintile
 dataset.TPP_death_date = patients.date_of_death
 dataset.ons_death_date = ons_deaths.date
 
-
-
-
 show(dataset)
+
+dataset.configure_dummy_data(population_size=1000)
 
 
 

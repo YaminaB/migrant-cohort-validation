@@ -1,8 +1,21 @@
 version: '4.0'
 
 actions:
-  generate_dataset:
-    run: ehrql:v1 generate-dataset analysis/dataset_definition.py --output output/dataset.csv.gz
+  generate_full_study_cohort:
+    run: ehrql:v1 generate_full_study_cohort analysis/dataset_definition_full_study_cohort.py --output output/full_study_cohort.csv.gz
     outputs:
       highly_sensitive:
-        dataset: output/dataset.csv.gz
+        dataset: output/full_study_cohort.csv.gz
+
+  generate_annual_study_cohort:
+    run: ehrql:v1 generate_annual_study_cohort analysis/dataset_definition_annual_study_cohort.py --output output/annual_study_cohort.csv.gz
+    outputs:
+      highly_sensitive:
+        dataset: output/annual_study_cohort.csv.gz
+
+  generate_report:
+    run: python:v2 python analysis/report.py
+    needs: [generate_dataset]
+    outputs:
+      moderately_sensitive:
+        chart: output/report.png
