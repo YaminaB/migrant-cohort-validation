@@ -8,10 +8,10 @@
 #         3) does not have a disclosive sex AND 
 #         4) was not over 100 years of age
 # By:
-# - Sex - done
-# - Ethnicity (using SNOMED:2022 codelist)
+# - Sex
+# - Ethnicity (using SNOMED:2022 codelist) - to do
 # - Age (use age bands)
-# - Practice region
+# - Practice region - to do 
 # - IMD
 
 # Author: Yamina Boukari
@@ -77,14 +77,71 @@ has_recorded_sex = patients.sex.is_in(["male", "female"])
 age = patients.age_on(INTERVAL.start_date)
 not_over_100_years = age <= 100
 
-# define measure 
+age_band = case(
+    when((age >= 0) & (age < 20)).then("0-19"),
+    when((age >= 20) & (age < 40)).then("20-39"),
+    when((age >= 40) & (age < 60)).then("40-59"),
+    when((age >= 60) & (age < 80)).then("60-79"),
+    when(age >= 80).then("80+"),
+)
+
+# define measures -
+
+## set defaults
+
+measures.define_defaults(
+    numerator = has_any_migrant_code_during_or_before_interval.exists_for_patient(),
+    denominator = was_alive_on_1Jan & was_registered_on1Jan & has_recorded_sex & not_over_100_years & has_recorded_sex,
+    intervals= years(16).starting_on("2009-01-01")
+)
+
+## all migrants
 
 measures.define_measure(
     name = "migrant", 
-    numerator  = has_any_migrant_code_during_or_before_interval.exists_for_patient(),
-    denominator = was_alive_on_1Jan & was_registered_on1Jan & has_recorded_sex & not_over_100_years & has_recorded_sex,
+    group_by = {
+        
+    }
+)
+
+## broken down by sex
+
+measures.define_measure(
+    name = "migrant_sex", 
     group_by = {
         "sex": patients.sex 
-    },
-    intervals = years(16).starting_on("2009-01-01")
+    }
 )
+
+## broken down by age
+
+measures.define_measure(
+    name = "migrant_age", 
+    group_by = {
+        "age_band": age_band 
+    }
+)
+
+## broken down by imd
+
+imd_rounded = addresses.for_patient_on(INTERVAL.start_date).imd_rounded
+max_imd = 32844
+imd_quintile = case(
+    when(imd_rounded < int(max_imd * 1 / 5)).then(1),
+    when(imd_rounded < int(max_imd * 2 / 5)).then(2),
+    when(imd_rounded < int(max_imd * 3 / 5)).then(3),
+    when(imd_rounded < int(max_imd * 4 / 5)).then(4),
+    when(imd_rounded <= max_imd).then(5),
+)
+
+measures.define_measure(
+    name = "migrant_imd", 
+    group_by = {
+        "imd": imd_quintile 
+    }
+)
+
+
+
+
+

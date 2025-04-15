@@ -13,3 +13,10 @@ actions:
     outputs:
       highly_sensitive:
         dataset: output/annual_migrant_counts.csv.gz
+
+  plot_measures:
+    run: python:latest analysis/generate_yearly_plots.py
+    needs: [generate_annual_migrant_counts] 
+    outputs:
+      moderately_sensitive:
+        plot: output/measure_plot.png
