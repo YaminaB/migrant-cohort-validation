@@ -8,11 +8,11 @@
 #         3) does not have a disclosive sex AND 
 #         4) was not over 100 years of age
 # By:
+# - Age 
 # - Sex
-# - Ethnicity (using SNOMED:2022 codelist) - to do
-# - Age (use age bands)
+# - Ethnicity (using SNOMED:2022 codelist) 
 # - Practice region - to do 
-# - IMD
+# - IMD quintile 
 
 # Author: Yamina Boukari
 # Bennett Institute for Applied Data Science, University of Oxford, 2025
@@ -20,9 +20,12 @@
 #############################################################################
 
 from ehrql import create_dataset, codelist_from_csv, show, INTERVAL, case, create_measures, years, when
-from ehrql.tables.tpp import addresses, patients, practice_registrations, clinical_events, ons_deaths
+from ehrql.tables.tpp import addresses, patients, practice_registrations, clinical_events
 
 measures = create_measures()
+
+measures.configure_dummy_data(population_size=1000)
+measures.configure_disclosure_control(enabled=False) # needs to be enabled when running on real data!
 
 # Load codelists 
 
@@ -45,14 +48,16 @@ interpreter_migrant_codes = codelist_from_csv(
 ethnicity_codelist = codelist_from_csv(
     "codelists/opensafely-ethnicity-snomed-0removed.csv",
     column="code",
-    category_column="Grouping_6",
+    category_column="Label_6",
 )
 
-# 1) was alive on the 1st January of each calendar year AND
+# Define denominator based on inclusion criteria  --------------------------------------
+
+# was alive on the 1st January of each calendar year AND
 
 was_alive_on_1Jan = patients.is_alive_on(INTERVAL.start_date)
 
-# 2) was registered with a practice on the 1st January of each calendar year AND
+# was registered with a practice on the 1st January of each calendar year AND
 
 was_registered_on1Jan = (
     practice_registrations
@@ -61,18 +66,11 @@ was_registered_on1Jan = (
     .exists_for_patient()
 )
 
-# 3) had a migration-related code at any time point before or on the 1st January of each calendar year AND
-
-has_any_migrant_code = (
-    clinical_events.where(clinical_events.snomedct_code.is_in(all_migrant_codes)))
-
-has_any_migrant_code_during_or_before_interval  = has_any_migrant_code.where(clinical_events.date.is_on_or_before(INTERVAL.end_date))
-
-# 4) does not have a disclosive sex AND 
+# does not have a disclosive sex AND 
 
 has_recorded_sex = patients.sex.is_in(["male", "female"])
 
-# 5) was not over 100 years of age
+# was not over 100 years of age
 
 age = patients.age_on(INTERVAL.start_date)
 not_over_100_years = age <= 100
@@ -82,47 +80,46 @@ age_band = case(
     when((age >= 20) & (age < 40)).then("20-39"),
     when((age >= 40) & (age < 60)).then("40-59"),
     when((age >= 60) & (age < 80)).then("60-79"),
-    when(age >= 80).then("80+"),
+    when(age >= 80).then("80+")
 )
 
-# define measures -
+# Define numerators ----------------------------------
 
-## set defaults
+# Mapping of numerator names to their codelists
 
-measures.define_defaults(
-    numerator = has_any_migrant_code_during_or_before_interval.exists_for_patient(),
-    denominator = was_alive_on_1Jan & was_registered_on1Jan & has_recorded_sex & not_over_100_years & has_recorded_sex,
-    intervals= years(16).starting_on("2009-01-01")
+migrant_codelists = {
+    "any_migrant": all_migrant_codes,
+    "cob_migrant": cob_migrant_codes,
+    "asylum_refugee_migrant": asylum_refugee_migrant_codes,
+    "interpreter_migrant": interpreter_migrant_codes,
+}
+
+# Automatically generate the numerators 
+
+numerators = {
+    name: (
+        clinical_events
+        .where(clinical_events.snomedct_code.is_in(codelist))
+        .where(clinical_events.date.is_on_or_before(INTERVAL.end_date))
+        .exists_for_patient()
+    )
+    for name, codelist in migrant_codelists.items()
+}
+
+# Define measures -------------------------------------
+
+## Define subgroup variables (if needed)
+
+## Ethnicity
+
+ethnicity = (
+    clinical_events.where(clinical_events.snomedct_code.is_in(ethnicity_codelist))
+    .sort_by(clinical_events.date)
+    .last_for_patient()
+    .snomedct_code.to_category(ethnicity_codelist)
 )
 
-## all migrants
-
-measures.define_measure(
-    name = "migrant", 
-    group_by = {
-        
-    }
-)
-
-## broken down by sex
-
-measures.define_measure(
-    name = "migrant_sex", 
-    group_by = {
-        "sex": patients.sex 
-    }
-)
-
-## broken down by age
-
-measures.define_measure(
-    name = "migrant_age", 
-    group_by = {
-        "age_band": age_band 
-    }
-)
-
-## broken down by imd
+## IMD
 
 imd_rounded = addresses.for_patient_on(INTERVAL.start_date).imd_rounded
 max_imd = 32844
@@ -134,14 +131,38 @@ imd_quintile = case(
     when(imd_rounded <= max_imd).then(5),
 )
 
-measures.define_measure(
-    name = "migrant_imd", 
-    group_by = {
-        "imd": imd_quintile 
-    }
+## Region
+
+practice_id = (practice_registrations.for_patient_on(INTERVAL.start_date)
+               .practice_pseudo_id)
+region = (practice_registrations.for_patient_on(INTERVAL.start_date)
+          .practice_nuts1_region_name)
+
+# Create subgroups dictionary
+
+subgroups = {
+    "": {},  # No grouping, just the overall measure
+    "age": {"age_band": age_band},
+    "sex": {"sex": patients.sex},
+    "ethnicity": {"ethnicity": ethnicity},
+    "imd": {"imd_quintile": imd_quintile},
+    "region": {"region": region}
+}
+
+## set defaults
+
+measures.define_defaults(
+    denominator=was_alive_on_1Jan & was_registered_on1Jan & has_recorded_sex & not_over_100_years,
+    intervals=years(16).starting_on("2009-01-01")
 )
 
-
-
+for key, numerator in numerators.items():
+    for suffix, group in subgroups.items():
+        measure_name = f"{key}" if suffix == "" else f"{key}_{suffix}"
+        measures.define_measure(
+            name=measure_name,
+            numerator=numerator,
+            group_by=group
+        )
 
 
