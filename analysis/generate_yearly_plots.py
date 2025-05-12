@@ -35,6 +35,6 @@ for measure_name in df["measure"].unique():
     plt.tight_layout()
     
     # Save plot
-    plot_path = f"output/plots/{measure_name}.png"
+    plot_path = f"output/{measure_name}.png"
     plt.savefig(plot_path)
     plt.close()

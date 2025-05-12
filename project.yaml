@@ -19,4 +19,4 @@ actions:
     needs: [generate_annual_migrant_counts] 
     outputs:
       moderately_sensitive:
-        plot: output/measure_plot.png
+        plot: output/*.png
