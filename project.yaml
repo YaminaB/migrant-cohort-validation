@@ -1,8 +1,22 @@
 version: '4.0'
 
 actions:
-  generate_dataset:
-    run: ehrql:v1 generate-dataset analysis/dataset_definition.py --output output/dataset.csv.gz
+  generate_full_study_cohort:
+    run: ehrql:v1 generate-dataset analysis/dataset_definition_full_study_cohort.py --output output/full_study_cohort.csv.gz
     outputs:
       highly_sensitive:
-        dataset: output/dataset.csv.gz
+        dataset: output/full_study_cohort.csv.gz
+
+  generate_annual_migrant_counts:
+    run: ehrql:v1 generate-measures analysis/generate_annual_migrant_counts.py
+      --output output/annual_migrant_counts.csv.gz
+    outputs:
+      highly_sensitive:
+        dataset: output/annual_migrant_counts.csv.gz
+
+  plot_measures:
+    run: python:latest analysis/generate_yearly_plots.py
+    needs: [generate_annual_migrant_counts] 
+    outputs:
+      moderately_sensitive:
+        plot: output/*.png
