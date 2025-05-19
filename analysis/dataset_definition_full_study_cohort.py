@@ -4,7 +4,7 @@
 #         2) who was registered at anytime (2009-2024) AND
 #         3) who does not have a disclosive sex 
 # - Add a variable to indicate the date when they got their first migration code 
-# - Add a variable to indicate number of migration codes in their record
+# - Add a variable to indicate the number of migration codes in their record
 # - Add a variable to indicate the category of migration-related code 
 # - Add a sex variable
 # - Add date of first practice registration variable
@@ -39,7 +39,7 @@ interpreter_migrant_codes = codelist_from_csv(
 ethnicity_codelist = codelist_from_csv(
     "codelists/opensafely-ethnicity-snomed-0removed.csv",
     column="code",
-    category_column="Grouping_6",
+    category_column="Label_6",
 )
 
 # Dates

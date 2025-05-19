@@ -2,10 +2,10 @@ version: '4.0'
 
 actions:
   generate_full_study_cohort:
-    run: ehrql:v1 generate-dataset analysis/dataset_definition_full_study_cohort.py --output output/full_study_cohort.csv.gz
+    run: ehrql:v1 generate-dataset analysis/dataset_definition_full_study_cohort.py --output output/full_study_cohort.csv
     outputs:
       highly_sensitive:
-        dataset: output/full_study_cohort.csv.gz
+        dataset: output/full_study_cohort.csv
 
   generate_annual_migrant_counts:
     run: ehrql:v1 generate-measures analysis/generate_annual_migrant_counts.py
