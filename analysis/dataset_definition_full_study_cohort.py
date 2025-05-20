@@ -50,7 +50,8 @@ study_end_date = "2024-12-31"
 # Select all individuals who:
 #          1) had a migrant code during the entire study period AND 
 #          2) were registered at some point during the period AND 
-#          3) has a non-disclosive sex
+#          3) has a non-disclosive sex AND
+#          4) had not died before the start of the study period 
 # Add a variable indicating the date of the first code 
 # Add a variable indicating how many migration-related codes they have
 
@@ -68,8 +69,13 @@ has_non_disclosive_sex = (
     (patients.sex == "male") | (patients.sex == "female")
 )
 
+is_alive_at_study_start = (
+    ((patients.date_of_death >= study_start_date) | (patients.date_of_death.is_null())) &
+    ((ons_deaths.date >= study_start_date) | (ons_deaths.date.is_null()))
+)
+
 dataset = create_dataset()
-dataset.define_population(has_any_migrant_code & is_registered_during_study & has_non_disclosive_sex)
+dataset.define_population(has_any_migrant_code & is_registered_during_study & has_non_disclosive_sex & is_alive_at_study_start)
 
 date_of_first_migration_code = (
     clinical_events.where(clinical_events.snomedct_code.is_in(all_migrant_codes))

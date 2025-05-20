@@ -19,5 +19,3 @@ print(df)
 #    "Year of birth": df[]
 #    "imd_decile": df["imd_decile"].value_counts().sort_index()
 #}
-
-print(summary)
