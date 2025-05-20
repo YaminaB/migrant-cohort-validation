@@ -30,7 +30,8 @@ test_data = {
             {
                 "start_date": date(2020, 1, 1),
                 "end_date": date(2023, 1, 1),
-                "msoa_code": "E02000864"
+                "msoa_code": "E02000864",
+                "imd_rounded": 9853
             }
         ], 
         "ons_deaths": {
@@ -102,6 +103,8 @@ test_data = {
             "latest_ethnicity_group": "Chinese or Other Ethnic Groups",
             "year_of_birth": 1999,
             "msoa_code": "E02000864",
+            "imd_decile": "3",
+            "imd_quintile": "2",
             "TPP_death_date": None,
             "ons_death_date": None
             }
