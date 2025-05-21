@@ -2,7 +2,9 @@
 # - Select anyone with 
 #         1) a migration-related code at any time point during the study period AND 
 #         2) who was registered at anytime (2009-2024) AND
-#         3) who does not have a disclosive sex 
+#         3) who does not have a disclosive sex AND
+#         4) had not died before the start of the study period AND 
+#         5) was not over 100 years old at the beginning of the study period
 # - Add a variable to indicate the date when they got their first migration code 
 # - Add a variable to indicate the number of migration codes in their record
 # - Add a variable to indicate the category of migration-related code 
@@ -15,7 +17,7 @@
 # - Add IMD variable 
 # - Add a date of death (if there is one)
 
-from ehrql import create_dataset, codelist_from_csv, show
+from ehrql import create_dataset, codelist_from_csv, show, case, when
 from ehrql.tables.tpp import addresses, patients, practice_registrations, clinical_events, ons_deaths
 
 # Load codelists 
@@ -52,6 +54,7 @@ study_end_date = "2024-12-31"
 #          2) were registered at some point during the period AND 
 #          3) has a non-disclosive sex AND
 #          4) had not died before the start of the study period 
+#          5) was not over 100 years old at the beginning of the study period
 # Add a variable indicating the date of the first code 
 # Add a variable indicating how many migration-related codes they have
 
@@ -74,8 +77,20 @@ is_alive_at_study_start = (
     ((ons_deaths.date >= study_start_date) | (ons_deaths.date.is_null()))
 )
 
+was_not_over_100_at_study_start = (
+    patients.age_on(study_start_date) <= 100
+)
+
+show(was_not_over_100_at_study_start)
+
 dataset = create_dataset()
-dataset.define_population(has_any_migrant_code & is_registered_during_study & has_non_disclosive_sex & is_alive_at_study_start)
+dataset.define_population(has_any_migrant_code & 
+                          is_registered_during_study & 
+                          has_non_disclosive_sex & 
+                          is_alive_at_study_start & 
+                          was_not_over_100_at_study_start)
+
+show(dataset)
 
 date_of_first_migration_code = (
     clinical_events.where(clinical_events.snomedct_code.is_in(all_migrant_codes))
@@ -124,9 +139,19 @@ dataset.latest_ethnicity_group = dataset.latest_ethnicity_code.to_category(
     ethnicity_codelist
 )
 
-# Add year of birth variable
+# Add year of birth variable and categorise into bands 
 
-dataset.year_of_birth = (patients.date_of_birth).year
+year_of_birth = (patients.date_of_birth).year
+dataset.year_of_birth = year_of_birth
+
+dataset.year_of_birth_band = case(
+    when((year_of_birth >= 1900) & (year_of_birth <= 1925)).then("1900-1925"),
+    when((year_of_birth > 1925) & (year_of_birth <= 1945)).then("1926-1945"),
+    when((year_of_birth > 1945) & (year_of_birth <= 1965)).then("1946-1965"),
+    when((year_of_birth > 1965) & (year_of_birth <= 1985)).then("1966-1985"),
+    when((year_of_birth > 1985) & (year_of_birth <= 2005)).then("1986-2005"),
+    when((year_of_birth > 2005) & (year_of_birth <= 2025)).then("2006-2025") 
+)
 
 # Add MSOA 
 
@@ -138,6 +163,10 @@ dataset.msoa_code = address.msoa_code
 
 dataset.imd_decile = address.imd_decile
 dataset.imd_quintile = address.imd_quintile
+
+# Add practice region (at study start)
+
+dataset.region = practice_registrations.for_patient_on(study_start_date).practice_nuts1_region_name
 
 # Add date of death (if died)
 
