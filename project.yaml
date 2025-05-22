@@ -7,6 +7,9 @@ actions:
       highly_sensitive:
         dataset: output/full_study_cohort.csv.gz
 
+  generate_demographics_table_for_full_study_cohort:
+    run: r:latest analysis/demographics_full_study_cohort.r
+
   generate_annual_migrant_counts:
     run: ehrql:v1 generate-measures analysis/generate_annual_migrant_counts.py
       --output output/annual_migrant_counts.csv.gz

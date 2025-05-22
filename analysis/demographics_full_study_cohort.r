@@ -1,11 +1,14 @@
 library(gtsummary)
 library(dplyr)
+library(here)
+library(janitor)
+library(fs)
+library(readr)
 
-# Sample data
+# load data
 full_study_cohort <- read.csv(gzfile("output/full_study_cohort.csv.gz"))
 
-# select needed variables
-colnames(full_study_cohort)
+# create sub-cohorts and bind to full cohort
 
 cob_cohort <- full_study_cohort %>%
   filter(has_cob_migrant_code == "TRUE") %>%
@@ -39,7 +42,8 @@ full_study_cohort_with_subgroups <- full_study_cohort_with_subgroups %>%
             ons_death_date, date_of_first_practice_registration, msoa_code, imd_decile, 
             has_cob_migrant_code, has_asylum_or_refugee_migrant_code, has_interpreter_migrant_code))
 
-# Generate demographics table
+# generate demographics table
+
 demographics <- full_study_cohort_with_subgroups %>%
   tbl_summary(by = cohort_type,
     statistic = list(
@@ -50,6 +54,9 @@ demographics <- full_study_cohort_with_subgroups %>%
   ) %>% 
   add_overall() %>%
   bold_labels()
+  
+demographics_tibble <- as_tibble(demographics, include = "tibble")
 
-# Print table
-demographics 
+dir_create(here("output", "tables"))
+
+write_csv(path = paste0(here::here("output", "tables"), "/", demographics))
