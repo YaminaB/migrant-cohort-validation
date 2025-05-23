@@ -8,18 +8,11 @@ actions:
         dataset: output/full_study_cohort.csv.gz
 
   generate_demographics_table_for_full_study_cohort:
-    run: r:latest analysis/demographics_full_study_cohort.r
-
-  generate_annual_migrant_counts:
-    run: ehrql:v1 generate-measures analysis/generate_annual_migrant_counts.py
-      --output output/annual_migrant_counts.csv.gz
-    outputs:
-      highly_sensitive:
-        dataset: output/annual_migrant_counts.csv.gz
-
-  plot_measures:
-    run: python:latest analysis/generate_yearly_plots.py
-    needs: [generate_annual_migrant_counts] 
+    run: r:latest analysis/demographics_full_study_cohort.r --output output/tables/demographics.csv
+    needs: 
+    - generate_full_study_cohort
     outputs:
       moderately_sensitive:
-        plot: output/*.png
+        csv: output/tables/demographics.csv
+
+ 

@@ -59,4 +59,4 @@ demographics_tibble <- as_tibble(demographics, include = "tibble")
 
 dir_create(here("output", "tables"))
 
-write_csv(path = paste0(here::here("output", "tables"), "/", demographics))
+write_csv(demographics_tibble, path = paste0(here::here("output", "tables"), "/demographics.csv"))
