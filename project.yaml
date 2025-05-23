@@ -7,6 +7,12 @@ actions:
       highly_sensitive:
         dataset: output/full_study_cohort.csv.gz
 
+  generate_census_2021_study_cohort:
+    run: ehrql:v1 generate-dataset analysis/dataset_definition_census_2021_cohort.py --output output/census_2021_study_cohort.csv.gz
+    outputs:
+      highly_sensitive:
+        dataset: output/census_2021_study_cohort.csv.gz
+
   generate_demographics_table_for_full_study_cohort:
     run: r:latest analysis/demographics_full_study_cohort.r --output output/tables/demographics.csv
     needs: 
