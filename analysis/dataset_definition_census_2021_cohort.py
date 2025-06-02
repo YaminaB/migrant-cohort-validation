@@ -1,96 +1,58 @@
 # This is a script to create the following migrant cohort with basic demographics:
 # - Select anyone with 
-#         1) a migration-related code at any time point during the study period AND 
-#         2) who was registered at anytime (2009-2024) AND
+#         1) a migration-related code at any time point on or before the 2021 Census date (21st March 2021) AND 
+#         2) who was registered on the Census 2021 date (21st March 2021) AND
 #         3) who does not have a disclosive sex AND
 #         4) had not died before the start of the study period AND 
-#         5) was not over 100 years old at the beginning of the study period
-# - Add a variable to indicate the date when they got their first migration code 
-# - Add a variable to indicate the number of migration codes in their record
-# - Add a variable to indicate the category of migration-related code 
-# - Add a sex variable
-# - Add date of first practice registration variable
-# - Add time from first practice registration to first migration code
-# - Add ethnicity variable (using SNOMED:2022 codelist)
-# - Add year of birth variable
-# - Add practice region variable (or equivalent)
-# - Add IMD variable 
-# - Add a date of death (if there is one)
+#         5) was not over 100 years old at the Census 2021 date (21st March 2021)
 
 from ehrql import create_dataset, codelist_from_csv, show, case, when
 from ehrql.tables.tpp import addresses, patients, practice_registrations, clinical_events, ons_deaths
+from utilities import load_all_codelists 
 
-# Load codelists 
+# load codelists 
+(all_migrant_codes,
+    cob_migrant_codes,
+    asylum_refugee_migrant_codes,
+    interpreter_migrant_codes,
+    ethnicity_codelist
+) = load_all_codelists().values()
 
-all_migrant_codes = codelist_from_csv(
-    "codelists/user-YaminaB-migration-status.csv", column="code"
-)
+# set date
+census_2021_date = "2021-03-21"
 
-cob_migrant_codes = codelist_from_csv(
-    "codelists/user-YaminaB-born-outside-the-uk.csv", column = "code"
-)
-
-asylum_refugee_migrant_codes = codelist_from_csv(
-    "codelists/user-YaminaB-asylum-seeker-or-refugee.csv", column = "code"
-)
-
-interpreter_migrant_codes = codelist_from_csv(
-    "codelists/user-YaminaB-interpreter-required.csv", column = "code"
-)
-
-ethnicity_codelist = codelist_from_csv(
-    "codelists/opensafely-ethnicity-snomed-0removed.csv",
-    column="code",
-    category_column="Label_6",
-)
-
-# Dates
-
-study_start_date = "2009-01-01"
-study_end_date = "2024-12-31"
-
-# Select all individuals who:
-#          1) had a migrant code during the entire study period AND 
-#          2) were registered at some point during the period AND 
-#          3) has a non-disclosive sex AND
-#          4) had not died before the start of the study period 
-#          5) was not over 100 years old at the beginning of the study period
-# Add a variable indicating the date of the first code 
-# Add a variable indicating how many migration-related codes they have
-
+# define population
 has_any_migrant_code = (
-    clinical_events.where(clinical_events.snomedct_code.is_in(all_migrant_codes))
-    .exists_for_patient())
+    clinical_events.where(clinical_events.snomedct_code.is_in(all_migrant_codes)
+                          ).where(clinical_events.date.is_on_or_before(census_2021_date)
+                                  ).exists_for_patient())
 
-is_registered_during_study = (
-    practice_registrations
-    .where((practice_registrations.end_date.is_null()) | ((practice_registrations.end_date.is_on_or_before(study_end_date)) & (practice_registrations.end_date.is_after(study_start_date))))
-    .exists_for_patient()
+was_registered_on_census_date = (
+    practice_registrations.exists_for_patient_on(census_2021_date)
 )           
 
 has_non_disclosive_sex = (
     (patients.sex == "male") | (patients.sex == "female")
 )
 
-is_alive_at_study_start = (
-    ((patients.date_of_death >= study_start_date) | (patients.date_of_death.is_null())) &
-    ((ons_deaths.date >= study_start_date) | (ons_deaths.date.is_null()))
+was_alive_on_census_date = (
+    (patients.is_alive_on(census_2021_date))
 )
 
-was_not_over_100_at_study_start = (
-    patients.age_on(study_start_date) <= 100
+was_not_over_100_on_census_date = (
+    patients.age_on(census_2021_date) <= 100
 )
-
-show(was_not_over_100_at_study_start)
 
 dataset = create_dataset()
 dataset.define_population(has_any_migrant_code & 
-                          is_registered_during_study & 
+                          was_registered_on_census_date & 
                           has_non_disclosive_sex & 
-                          is_alive_at_study_start & 
-                          was_not_over_100_at_study_start)
+                          was_alive_on_census_date & 
+                          was_not_over_100_on_census_date)
 
 show(dataset)
+
+# add variables 
 
 date_of_first_migration_code = (
     clinical_events.where(clinical_events.snomedct_code.is_in(all_migrant_codes))
@@ -153,9 +115,26 @@ dataset.year_of_birth_band = case(
     when((year_of_birth > 2005) & (year_of_birth <= 2025)).then("2006-2025") 
 )
 
+# age 
+
+age_on_census_date = patients.age_on(census_2021_date)
+dataset.age_on_census_date  = age_on_census_date
+
+dataset.age_band = case(
+        when(age_on_census_date < 16).then("0-15"),
+        when((age_on_census_date >= 16) & (age_on_census_date < 25)).then("16-24"),
+        when((age_on_census_date >= 25) & (age_on_census_date < 35)).then("25-34"),
+        when((age_on_census_date >= 35) & (age_on_census_date < 50)).then("35-49"),
+        when((age_on_census_date >= 50) & (age_on_census_date < 65)).then("50-64"),
+        when((age_on_census_date >= 65) & (age_on_census_date < 75)).then("65-74"),
+        when((age_on_census_date >= 75) & (age_on_census_date < 85)).then("75-84"),
+        when(age_on_census_date >= 85).then("85 plus"),
+        otherwise="missing",
+)
+
 # Add MSOA 
 
-address = addresses.for_patient_on("2021-03-21") # 2021 Census day
+address = addresses.for_patient_on(census_2021_date) 
 
 dataset.msoa_code = address.msoa_code
 
@@ -166,7 +145,7 @@ dataset.imd_quintile = address.imd_quintile
 
 # Add practice region (at study start)
 
-dataset.region = practice_registrations.for_patient_on(study_start_date).practice_nuts1_region_name
+dataset.region = practice_registrations.for_patient_on(census_2021_date).practice_nuts1_region_name
 
 # Add date of death (if died)
 
@@ -176,6 +155,4 @@ dataset.ons_death_date = ons_deaths.date
 show(dataset)
 
 dataset.configure_dummy_data(population_size=1000)
-
-
 

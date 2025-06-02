@@ -22,6 +22,8 @@
 from ehrql import create_dataset, codelist_from_csv, show, INTERVAL, case, create_measures, years, when
 from ehrql.tables.tpp import addresses, patients, practice_registrations, clinical_events
 
+import pandas as pd
+
 measures = create_measures()
 
 measures.configure_dummy_data(population_size=1000)
@@ -66,7 +68,7 @@ was_registered_on1Jan = (
     .exists_for_patient()
 )
 
-# does not have a disclosive sex AND 
+# does not have a disclosive sex  
 
 has_recorded_sex = patients.sex.is_in(["male", "female"])
 
@@ -165,4 +167,8 @@ for key, numerator in numerators.items():
             group_by=group
         )
 
+
+
+df = pd.read_csv("output/annual_migrant_counts.csv.gz")
+print(df)
 
