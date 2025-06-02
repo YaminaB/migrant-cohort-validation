@@ -22,8 +22,6 @@
 from ehrql import create_dataset, codelist_from_csv, show, INTERVAL, case, create_measures, years, when
 from ehrql.tables.tpp import addresses, patients, practice_registrations, clinical_events
 
-import pandas as pd
-
 measures = create_measures()
 
 measures.configure_dummy_data(population_size=1000)
@@ -78,11 +76,15 @@ age = patients.age_on(INTERVAL.start_date)
 not_over_100_years = age <= 100
 
 age_band = case(
-    when((age >= 0) & (age < 20)).then("0-19"),
-    when((age >= 20) & (age < 40)).then("20-39"),
-    when((age >= 40) & (age < 60)).then("40-59"),
-    when((age >= 60) & (age < 80)).then("60-79"),
-    when(age >= 80).then("80+")
+    when(age < 16).then("0-15"),
+    when((age >= 16) & (age < 25)).then("16-24"),
+    when((age >= 25) & (age < 35)).then("25-34"),
+    when((age >= 35) & (age < 50)).then("35-49"),
+    when((age >= 50) & (age < 65)).then("50-64"),
+    when((age >= 65) & (age < 75)).then("65-74"),
+    when((age >= 75) & (age < 85)).then("75-84"),
+    when(age >= 85).then("85 plus"),
+    otherwise="missing",
 )
 
 # Define numerators ----------------------------------
@@ -119,26 +121,21 @@ ethnicity = (
     .sort_by(clinical_events.date)
     .last_for_patient()
     .snomedct_code.to_category(ethnicity_codelist)
+    .when_null_then("unknown")
 )
 
 ## IMD
 
-imd_rounded = addresses.for_patient_on(INTERVAL.start_date).imd_rounded
-max_imd = 32844
-imd_quintile = case(
-    when(imd_rounded < int(max_imd * 1 / 5)).then(1),
-    when(imd_rounded < int(max_imd * 2 / 5)).then(2),
-    when(imd_rounded < int(max_imd * 3 / 5)).then(3),
-    when(imd_rounded < int(max_imd * 4 / 5)).then(4),
-    when(imd_rounded <= max_imd).then(5),
-)
+address = addresses.for_patient_on(INTERVAL.start_date)
+imd_quintile = address.imd_quintile
 
 ## Region
 
 practice_id = (practice_registrations.for_patient_on(INTERVAL.start_date)
                .practice_pseudo_id)
 region = (practice_registrations.for_patient_on(INTERVAL.start_date)
-          .practice_nuts1_region_name)
+          .practice_nuts1_region_name
+          .when_null_then("unknown"))
 
 # Create subgroups dictionary
 
@@ -168,7 +165,4 @@ for key, numerator in numerators.items():
         )
 
 
-
-df = pd.read_csv("output/annual_migrant_counts.csv.gz")
-print(df)
 

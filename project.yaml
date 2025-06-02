@@ -13,6 +13,29 @@ actions:
       highly_sensitive:
         dataset: output/census_2021_study_cohort.csv.gz
 
+  generate_km_time_to_first_migration_code_cohort:
+    run: ehrql:v1 generate-dataset analysis/dataset_definition_km_time_to_first_migration_code.py --output output/km_time_to_first_migration_code_cohort.arrow
+    outputs:
+      highly_sensitive:
+        dataset: output/km_time_to_first_migration_code_cohort.arrow
+
+  km_time_to_first_migration_code:
+    run: kaplan-meier-function:v0.0.14
+      --df_input=output/km_time_to_first_migration_code_cohort.arrow
+      --dir_output=output/km_estimates/
+      --exposure=has_a_migration_code
+      --origin_date=date_of_first_practice_registration
+      --event_date=date_of_first_migration_code
+      --min_count=6
+      --plot=TRUE
+    needs:
+    - generate_km_time_to_first_migration_code_cohort 
+    outputs:
+      highly_sensitive:
+        estimates: output/estimates.*arrow
+        contrasts: output/contrasts.*arrow
+        plots: output/plot.png
+
   generate_demographics_table_for_full_study_cohort:
     run: r:latest analysis/demographics_full_study_cohort.r --output output/tables/demographics.csv
     needs: 
@@ -20,5 +43,11 @@ actions:
     outputs:
       moderately_sensitive:
         csv: output/tables/demographics.csv
+
+  generate_annual_migrant_counts_broken_down:
+    run: ehrql:v1 generate-measures analysis/generate_annual_migrant_counts.py --output output/tables/annual_migrant_counts.csv
+    outputs:
+      moderately_sensitive:
+        csv: output/tables/annual_migrant_counts.csv
 
  
