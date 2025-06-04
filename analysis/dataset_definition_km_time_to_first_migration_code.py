@@ -5,8 +5,9 @@
 #         4) had not died before the start of the study period AND 
 #         5) was not over 100 years old at the start of the study period
 
-from ehrql import create_dataset, codelist_from_csv, show, case, when
+from ehrql import create_dataset, codelist_from_csv, show, case, when, days, minimum_of
 from ehrql.tables.tpp import addresses, patients, practice_registrations, clinical_events, ons_deaths
+from datetime import date, datetime
 
 all_migrant_codes = codelist_from_csv(
     "codelists/user-YaminaB-migration-status.csv", column="code"
@@ -48,10 +49,52 @@ dataset.define_population(is_registered_during_study &
 
 ## Date of first GP registration 
 
-dataset.date_of_first_practice_registration = (
+date_of_first_practice_registration = (
     practice_registrations.sort_by(practice_registrations.start_date)
     .first_for_patient().start_date
 )
+
+dataset.date_of_first_practice_registration = date_of_first_practice_registration
+
+# Baseline date is date_of_first_practice_registration minus 1 day
+# because we assume that any migration code recorded on date of practice registration
+# occured after registration.
+
+dataset.baseline_date = date_of_first_practice_registration - days(1)
+
+## De-registration date 
+
+def date_deregistered_from_all_supported_practices():
+    max_dereg_date = practice_registrations.end_date.maximum_for_patient()
+    # In TPP currently active registrations are recorded as having an end date of
+    # 9999-12-31. We convert these, and any other far-future dates, to NULL.
+    return case(
+        when(max_dereg_date.is_before("3000-01-01")).then(max_dereg_date),
+        otherwise=None,
+    )
+
+dataset.date_of_deregistration = date_deregistered_from_all_supported_practices()
+
+show(dataset)
+
+# Add date of death (if died)
+
+dataset.TPP_death_date = patients.date_of_death
+dataset.ons_death_date = ons_deaths.date
+
+# Censor date 
+
+study_end_date = datetime.strptime(study_end_date, "%Y-%m-%d").date()
+
+censor_date = minimum_of(dataset.TPP_death_date, 
+                         dataset.ons_death_date, 
+                         dataset.date_of_deregistration,
+                         study_end_date
+                         )
+
+dataset.censor_date = censor_date
+
+show(dataset)
 
 ## Migration status
 

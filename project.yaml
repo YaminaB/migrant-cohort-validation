@@ -23,9 +23,9 @@ actions:
     run: kaplan-meier-function:v0.0.14
       --df_input=output/km_time_to_first_migration_code_cohort.arrow
       --dir_output=output/km_estimates/
-      --exposure=has_a_migration_code
-      --origin_date=date_of_first_practice_registration
+      --origin_date=baseline_date
       --event_date=date_of_first_migration_code
+      --censor_date=censor_date
       --min_count=6
       --plot=TRUE
     needs:
