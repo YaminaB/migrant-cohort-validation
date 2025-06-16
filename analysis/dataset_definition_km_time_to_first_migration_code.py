@@ -5,8 +5,9 @@
 #         4) had not died before the start of the study period AND 
 #         5) was not over 100 years old at the start of the study period
 
-from ehrql import create_dataset, codelist_from_csv, show, case, when
+from ehrql import create_dataset, codelist_from_csv, show, case, when, days, minimum_of
 from ehrql.tables.tpp import addresses, patients, practice_registrations, clinical_events, ons_deaths
+from datetime import date, datetime
 
 all_migrant_codes = codelist_from_csv(
     "codelists/user-YaminaB-migration-status.csv", column="code"
@@ -19,11 +20,12 @@ study_end_date = "2024-12-31"
 
 # Dataset definitions
 
-is_registered_during_study = (
-    practice_registrations
-    .where((practice_registrations.end_date.is_null()) | ((practice_registrations.end_date.is_on_or_before(study_end_date)) & (practice_registrations.end_date.is_after(study_start_date))))
-    .exists_for_patient()
-)           
+is_registered_during_study = (practice_registrations.where((practice_registrations.start_date.is_on_or_before(study_start_date) | 
+                                    practice_registrations.start_date.is_between_but_not_on(study_start_date, study_end_date)) &
+                                    ((practice_registrations.end_date.is_null()) | 
+                                     (practice_registrations.end_date.is_between_but_not_on(study_start_date, study_end_date)) |
+                                     (practice_registrations.end_date.is_on_or_after(study_end_date)))
+).exists_for_patient())           
 
 has_non_disclosive_sex = (
     (patients.sex == "male") | (patients.sex == "female")
@@ -48,10 +50,52 @@ dataset.define_population(is_registered_during_study &
 
 ## Date of first GP registration 
 
-dataset.date_of_first_practice_registration = (
+date_of_first_practice_registration = (
     practice_registrations.sort_by(practice_registrations.start_date)
     .first_for_patient().start_date
 )
+
+dataset.date_of_first_practice_registration = date_of_first_practice_registration
+
+# Baseline date is date_of_first_practice_registration minus 1 day
+# because we assume that any migration code recorded on date of practice registration
+# occured after registration.
+
+dataset.baseline_date = date_of_first_practice_registration - days(1)
+
+## De-registration date 
+
+def date_deregistered_from_all_supported_practices():
+    max_dereg_date = practice_registrations.end_date.maximum_for_patient()
+    # In TPP currently active registrations are recorded as having an end date of
+    # 9999-12-31. We convert these, and any other far-future dates, to NULL.
+    return case(
+        when(max_dereg_date.is_before("3000-01-01")).then(max_dereg_date),
+        otherwise=None,
+    )
+
+dataset.date_of_deregistration = date_deregistered_from_all_supported_practices()
+
+show(dataset)
+
+# Add date of death (if died)
+
+dataset.TPP_death_date = patients.date_of_death
+dataset.ons_death_date = ons_deaths.date
+
+# Censor date 
+
+study_end_date = datetime.strptime(study_end_date, "%Y-%m-%d").date()
+
+censor_date = minimum_of(dataset.TPP_death_date, 
+                         dataset.ons_death_date, 
+                         dataset.date_of_deregistration,
+                         study_end_date
+                         )
+
+dataset.censor_date = censor_date
+
+show(dataset)
 
 ## Migration status
 
@@ -61,10 +105,23 @@ dataset.has_a_migration_code = (
 
 ## Date of first migration code
 
-dataset.date_of_first_migration_code = (
+date_of_first_migration_code = (
     clinical_events.where(clinical_events.snomedct_code.is_in(all_migrant_codes))
     .sort_by(clinical_events.date)
     .first_for_patient().date)
+
+dataset.date_of_first_migration_code = date_of_first_migration_code
+
+migration_code_before_practice_reg = date_of_first_migration_code < date_of_first_practice_registration
+
+processed_first_migration_code_date = case(
+    when(migration_code_before_practice_reg == False).then(date_of_first_migration_code),
+    when(migration_code_before_practice_reg == True).then(date_of_first_practice_registration)
+)
+
+dataset.processed_first_migration_code_date = processed_first_migration_code_date
+
+show(dataset)
 
 ## Number of migration codes (maybe don't need)
 

@@ -1,10 +1,10 @@
 # This is a script to create the following migrant cohort with basic demographics:
 # - Select anyone with 
-#         1) a migration-related code at any time point on or before the 2021 Census date (21st March 2021) AND 
-#         2) who was registered on the Census 2021 date (21st March 2021) AND
+#         1) a migration-related code at any time point on or before the Census date AND 
+#         2) who was registered on the Census date AND
 #         3) who does not have a disclosive sex AND
 #         4) had not died before the start of the study period AND 
-#         5) was not over 100 years old at the Census 2021 date (21st March 2021)
+#         5) was not over 100 years old at the Census  date 
 
 from ehrql import create_dataset, codelist_from_csv, show, case, when
 from ehrql.tables.tpp import addresses, patients, practice_registrations, clinical_events, ons_deaths

@@ -24,17 +24,18 @@ actions:
       --df_input=output/km_time_to_first_migration_code_cohort.arrow
       --dir_output=output/km_estimates/
       --exposure=has_a_migration_code
-      --origin_date=date_of_first_practice_registration
-      --event_date=date_of_first_migration_code
+      --origin_date=baseline_date
+      --event_date=processed_first_migration_code_date
+      --censor_date=censor_date
       --min_count=6
       --plot=TRUE
     needs:
     - generate_km_time_to_first_migration_code_cohort 
     outputs:
       highly_sensitive:
-        estimates: output/estimates.*arrow
-        contrasts: output/contrasts.*arrow
-        plots: output/plot.png
+        estimates: output/km_estimates/estimates.arrow
+        contrasts: output/km_estimates/contrasts.arrow
+        plots: output/km_estimates/plot.png
 
   generate_demographics_table_for_full_study_cohort:
     run: r:latest analysis/demographics_full_study_cohort.r --output output/tables/demographics.csv
