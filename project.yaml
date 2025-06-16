@@ -7,11 +7,23 @@ actions:
       highly_sensitive:
         dataset: output/full_study_cohort.csv.gz
 
-  generate_census_2021_study_cohort:
-    run: ehrql:v1 generate-dataset analysis/dataset_definition_census_2021_cohort.py --output output/census_2021_study_cohort.csv.gz
+  generate_dataset_for_census_2021:
+    run: ehrql:v1 generate-dataset analysis/dataset_definition_census_cohorts.py 
+      --output output/census_2021_study_cohort.csv.gz
+      --
+      --census-date "2021-03-21"
     outputs:
       highly_sensitive:
         dataset: output/census_2021_study_cohort.csv.gz
+
+  generate_dataset_for_census_2011:
+    run: ehrql:v1 generate-dataset analysis/dataset_definition_census_cohorts.py 
+      --output output/census_2011_study_cohort.csv.gz
+      --
+      --census-date "2011-03-27"
+    outputs:
+      highly_sensitive:
+        dataset: output/census_2011_study_cohort.csv.gz
 
   generate_km_time_to_first_migration_code_cohort:
     run: ehrql:v1 generate-dataset analysis/dataset_definition_km_time_to_first_migration_code.py --output output/km_time_to_first_migration_code_cohort.arrow
