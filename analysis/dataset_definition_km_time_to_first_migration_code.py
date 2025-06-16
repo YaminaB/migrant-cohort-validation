@@ -20,11 +20,12 @@ study_end_date = "2024-12-31"
 
 # Dataset definitions
 
-is_registered_during_study = (
-    practice_registrations
-    .where((practice_registrations.end_date.is_null()) | ((practice_registrations.end_date.is_on_or_before(study_end_date)) & (practice_registrations.end_date.is_after(study_start_date))))
-    .exists_for_patient()
-)           
+is_registered_during_study = (practice_registrations.where((practice_registrations.start_date.is_on_or_before(study_start_date) | 
+                                    practice_registrations.start_date.is_between_but_not_on(study_start_date, study_end_date)) &
+                                    ((practice_registrations.end_date.is_null()) | 
+                                     (practice_registrations.end_date.is_between_but_not_on(study_start_date, study_end_date)) |
+                                     (practice_registrations.end_date.is_on_or_after(study_end_date)))
+).exists_for_patient())           
 
 has_non_disclosive_sex = (
     (patients.sex == "male") | (patients.sex == "female")
@@ -104,10 +105,23 @@ dataset.has_a_migration_code = (
 
 ## Date of first migration code
 
-dataset.date_of_first_migration_code = (
+date_of_first_migration_code = (
     clinical_events.where(clinical_events.snomedct_code.is_in(all_migrant_codes))
     .sort_by(clinical_events.date)
     .first_for_patient().date)
+
+dataset.date_of_first_migration_code = date_of_first_migration_code
+
+migration_code_before_practice_reg = date_of_first_migration_code < date_of_first_practice_registration
+
+processed_first_migration_code_date = case(
+    when(migration_code_before_practice_reg == False).then(date_of_first_migration_code),
+    when(migration_code_before_practice_reg == True).then(date_of_first_practice_registration)
+)
+
+dataset.processed_first_migration_code_date = processed_first_migration_code_date
+
+show(dataset)
 
 ## Number of migration codes (maybe don't need)
 
