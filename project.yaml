@@ -2,38 +2,38 @@ version: '4.0'
 
 actions:
   generate_full_study_cohort:
-    run: ehrql:v1 generate-dataset analysis/dataset_definition_full_study_cohort.py --output output/full_study_cohort.csv.gz
+    run: ehrql:v1 generate-dataset analysis/1-create_cohorts/dataset_definition_full_study_cohort.py --output output/cohorts/full_study_cohort.arrow
     outputs:
       highly_sensitive:
-        dataset: output/full_study_cohort.csv.gz
+        dataset: output/cohorts/full_study_cohort.arrow
 
   generate_dataset_for_census_2021:
-    run: ehrql:v1 generate-dataset analysis/dataset_definition_census_cohorts.py 
-      --output output/census_2021_study_cohort.csv.gz
+    run: ehrql:v1 generate-dataset analysis/1-create_cohorts/dataset_definition_census_cohorts.py 
+      --output output/cohorts/census_2021_study_cohort.arrow
       --
       --census-date "2021-03-21"
     outputs:
       highly_sensitive:
-        dataset: output/census_2021_study_cohort.csv.gz
+        dataset: output/cohorts/census_2021_study_cohort.arrow
 
   generate_dataset_for_census_2011:
-    run: ehrql:v1 generate-dataset analysis/dataset_definition_census_cohorts.py 
-      --output output/census_2011_study_cohort.csv.gz
+    run: ehrql:v1 generate-dataset analysis/1-create_cohorts/dataset_definition_census_cohorts.py 
+      --output output/cohorts/census_2011_study_cohort.arrow
       --
       --census-date "2011-03-27"
     outputs:
       highly_sensitive:
-        dataset: output/census_2011_study_cohort.csv.gz
+        dataset: output/cohorts/census_2011_study_cohort.arrow
 
   generate_km_time_to_first_migration_code_cohort:
-    run: ehrql:v1 generate-dataset analysis/dataset_definition_km_time_to_first_migration_code.py --output output/km_time_to_first_migration_code_cohort.arrow
+    run: ehrql:v1 generate-dataset analysis/1-create_cohorts/dataset_definition_km_time_to_first_migration_code.py --output output/cohorts/km_time_to_first_migration_code_cohort.arrow
     outputs:
       highly_sensitive:
-        dataset: output/km_time_to_first_migration_code_cohort.arrow
+        dataset: output/cohorts/km_time_to_first_migration_code_cohort.arrow
 
   km_time_to_first_migration_code:
     run: kaplan-meier-function:v0.0.14
-      --df_input=output/km_time_to_first_migration_code_cohort.arrow
+      --df_input=output/cohorts/km_time_to_first_migration_code_cohort.arrow
       --dir_output=output/km_estimates/
       --exposure=has_a_migration_code
       --origin_date=baseline_date
@@ -45,20 +45,36 @@ actions:
     - generate_km_time_to_first_migration_code_cohort 
     outputs:
       highly_sensitive:
-        estimates: output/km_estimates/estimates.arrow
-        contrasts: output/km_estimates/contrasts.arrow
+        estimates: output/km_estimates/estimates.csv
+        contrasts: output/km_estimates/contrasts_rounded.csv
         plots: output/km_estimates/plot.png
 
-  generate_demographics_table_for_full_study_cohort:
-    run: r:latest analysis/demographics_full_study_cohort.r --output output/tables/demographics.csv
-    needs: 
+  generate_demographics_full_study_table:
+    run: r:latest analysis/2-generate_demographic_tables/demographics_table.r output/cohorts/full_study_cohort.arrow output/tables/demographics_full_study_cohort.csv
+    needs:
     - generate_full_study_cohort
     outputs:
       moderately_sensitive:
-        csv: output/tables/demographics.csv
+        csv: output/tables/demographics_full_study_cohort.csv
+
+  generate_demographics_census_2011_study_table:
+    run: r:latest analysis/2-generate_demographic_tables/demographics_table.r output/cohorts/census_2011_study_cohort.arrow output/tables/demographics_census_2011_study_cohort.csv
+    needs:
+    - generate_dataset_for_census_2011
+    outputs:
+      moderately_sensitive:
+        csv: output/tables/demographics_census_2011_study_cohort.csv
+
+  generate_demographics_census_2021_study_table:
+    run: r:latest analysis/2-generate_demographic_tables/demographics_table.r output/cohorts/census_2021_study_cohort.arrow output/tables/demographics_census_2021_study_cohort.csv
+    needs:
+    - generate_dataset_for_census_2021
+    outputs:
+      moderately_sensitive:
+        csv: output/tables/demographics_census_2021_study_cohort.csv
 
   generate_annual_migrant_counts_broken_down:
-    run: ehrql:v1 generate-measures analysis/generate_annual_migrant_counts.py --output output/tables/annual_migrant_counts.csv
+    run: ehrql:v1 generate-measures analysis/3-annual_counts/generate_annual_migrant_counts.py --output output/tables/annual_migrant_counts.csv
     outputs:
       moderately_sensitive:
         csv: output/tables/annual_migrant_counts.csv

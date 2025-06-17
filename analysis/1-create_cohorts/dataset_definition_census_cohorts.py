@@ -9,10 +9,10 @@
 from ehrql import create_dataset, codelist_from_csv, show, case, when
 from ehrql.tables.tpp import addresses, patients, practice_registrations, clinical_events, ons_deaths
 from utilities import load_all_codelists 
+from argparse import ArgumentParser
 
 # Below code from https://github.com/opensafely/disease_incidence/blob/main/analysis/dataset_definition_demographics.py
 # Arguments (from project.yaml)
-from argparse import ArgumentParser
 
 parser = ArgumentParser()
 parser.add_argument("--census-date", type=str)
