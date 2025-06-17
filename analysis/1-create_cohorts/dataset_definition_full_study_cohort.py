@@ -140,7 +140,7 @@ dataset.year_of_birth_band = case(
 
 # Add MSOA 
 
-address = addresses.for_patient_on("2021-03-21") # 2021 Census day
+address = addresses.for_patient_on(study_start_date) 
 
 dataset.msoa_code = address.msoa_code
 

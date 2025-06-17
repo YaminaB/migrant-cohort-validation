@@ -25,6 +25,12 @@ actions:
       highly_sensitive:
         dataset: output/cohorts/census_2011_study_cohort.arrow
 
+  generate_dataset_for_population_denominators:
+    run: ehrql:v1 generate-dataset analysis/1-create_cohorts/population_denominator_cohort.py --output output/cohorts/population_denominator_cohort.arrow
+    outputs:
+      highly_sensitive:
+        dataset: output/cohorts/population_denominator_cohort.arrow
+
   generate_km_time_to_first_migration_code_cohort:
     run: ehrql:v1 generate-dataset analysis/1-create_cohorts/dataset_definition_km_time_to_first_migration_code.py --output output/cohorts/km_time_to_first_migration_code_cohort.arrow
     outputs:
