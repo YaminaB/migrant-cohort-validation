@@ -1,11 +1,12 @@
-library(gtsummary)
-library(dplyr)
+####
+# A script for creating demographic tables 
+# that takes a cohort_file and output_file arguement from the project.yaml file
+# Author: Yamina Boukari
+###
+
 library(here)
-library(janitor)
-library(fs)
-library(readr)
-library(tools)
-library(arrow)
+
+source(here("analysis", "lib", "utility.R"))
 
 # Parse command-line argument
 args <- commandArgs(trailingOnly=TRUE)
@@ -15,8 +16,6 @@ output_file <- args[[2]]
 
 # load data
 cohort <- read_feather(cohort_file)
-
-cat("File successfully loaded. Rows:", nrow(cohort), "\n")
 
 # create sub-cohorts and bind to full cohort
 
@@ -54,21 +53,10 @@ study_cohort_with_subgroups <- study_cohort_with_subgroups %>%
 
 # generate demographics table
 
-demographics <- study_cohort_with_subgroups %>%
-  tbl_summary(by = cohort_type,
-    statistic = list(
-      all_categorical() ~ "{n} ({p}%)",
-      all_continuous() ~ "{median} ({p25}-{p75})",
-      all_dichotomous() ~ "{n} ({p}%)"), 
-    missing = "ifany"
-  ) %>% 
-  add_overall() %>%
-  bold_labels()
-  
-demographics_tibble <- as_tibble(demographics, include = "tibble")
-
-dir_create(here("output", "tables"))
-
-write_csv(demographics_tibble, path = output_file)
+generate_demographics_table(
+  cohort_file = study_cohort_with_subgroups,
+  by_category = cohort_type,
+  output_file = output_file
+)
 
 

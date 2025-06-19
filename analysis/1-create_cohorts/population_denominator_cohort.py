@@ -83,3 +83,5 @@ dataset.region = practice_registrations.for_patient_on(study_start_date).practic
 
 dataset.TPP_death_date = patients.date_of_death
 dataset.ons_death_date = ons_deaths.date
+
+dataset.configure_dummy_data(population_size=1000)
