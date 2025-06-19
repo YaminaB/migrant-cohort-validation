@@ -142,3 +142,88 @@ redact_tblsummary <- function(x, threshold, redact_chr=NA_character_){
   x
 
 }
+
+## Create table1-style summary of characteristics, with SDC applied ----
+# Written by W. Hulme: https://github.com/opensafely/CAP-CES/blob/main/analysis/0-lib/utility.R
+
+table1_summary <- function(.data, group, label, threshold) {
+  
+  ## this function is highly dependent on the structure of tbl_summary object internals!
+  ## be careful if this package is updated
+  
+  group_quo <- enquo(group)
+  
+  ## create a table of baseline characteristics between each treatment group, before matching / weighting
+  tab_summary <-
+    .data |>
+    select(
+      !!group_quo,
+      any_of(names(label)),
+    ) %>%
+    gtsummary::tbl_summary(
+      by = !!group_quo,
+      label = label[names(label) %in% names(.)],
+      statistic = list(
+        N ~ "{N}",
+        all_categorical() ~ "{n} ({p}%)",
+        all_continuous() ~ "{mean} ({sd}); ({p10}, {p25}, {median}, {p75}, {p90})"
+      ),
+    )
+
+  ## extract structured info from tbl_summary object to apply SDC to the counts 
+  raw_stats <- 
+    tab_summary$cards$tbl_summary |> 
+    mutate(
+      variable = factor(variable, levels = names(label)),
+      variable_label = factor(variable, levels = names(label),  labels = label),
+    ) |>
+    filter(!(context %in% c("missing", "attributes", "total_n"))) |>
+    select(-fmt_fn, -warning, -error, -gts_column) |>
+    pivot_wider(
+      id_cols = c("group1", "group1_level", "variable", "variable_label", "variable_level", "context"), 
+      names_from = stat_name, 
+      values_from = stat
+    ) |>
+    mutate(
+      across(
+        c(n, N),
+        ~{
+          map_int(., ~{
+            if(is.null(.)) NA else as.integer(.)
+          })
+        }
+      ),
+      across(
+        c(p, median, p10, p25, p75, p90, mean, sd),
+        ~{
+          map_dbl(., ~{
+            if(is.null(.)) NA else as.numeric(.)
+          })
+        }
+      ),
+      across(
+        c(group1_level, variable_level),
+        ~{
+          map_chr(., ~{
+            if(is.null(.)) NA else as.character(.)
+          })
+        }
+      ),
+    )|>
+    arrange(variable_label, group1, group1_level)
+  
+  raw_stats_redacted <- 
+    raw_stats |>
+    mutate(
+      n = roundmid_any(n, threshold),
+      N = roundmid_any(N, threshold),
+      p = n / N,
+    )
+  
+  return(raw_stats_redacted)
+}
+
+roundmid_any <- function(x, to = 1) {
+  # like ceiling_any, but centers on (integer) midpoint of the rounding points
+  ceiling(x / to) * to - (floor(to / 2) * (x != 0))
+}
