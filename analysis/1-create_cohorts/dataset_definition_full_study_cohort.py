@@ -19,30 +19,15 @@
 
 from ehrql import create_dataset, codelist_from_csv, show, case, when
 from ehrql.tables.tpp import addresses, patients, practice_registrations, clinical_events, ons_deaths
+from utilities import load_all_codelists 
 
-# Load codelists 
-
-all_migrant_codes = codelist_from_csv(
-    "codelists/user-YaminaB-migration-status.csv", column="code"
-)
-
-cob_migrant_codes = codelist_from_csv(
-    "codelists/user-YaminaB-born-outside-the-uk.csv", column = "code"
-)
-
-asylum_refugee_migrant_codes = codelist_from_csv(
-    "codelists/user-YaminaB-asylum-seeker-or-refugee.csv", column = "code"
-)
-
-interpreter_migrant_codes = codelist_from_csv(
-    "codelists/user-YaminaB-interpreter-required.csv", column = "code"
-)
-
-ethnicity_codelist = codelist_from_csv(
-    "codelists/opensafely-ethnicity-snomed-0removed.csv",
-    column="code",
-    category_column="Label_6",
-)
+# load codelists 
+(all_migrant_codes,
+    cob_migrant_codes,
+    asylum_refugee_migrant_codes,
+    interpreter_migrant_codes,
+    ethnicity_codelist
+) = load_all_codelists().values()
 
 # Dates
 
@@ -155,7 +140,7 @@ dataset.year_of_birth_band = case(
 
 # Add MSOA 
 
-address = addresses.for_patient_on("2021-03-21") # 2021 Census day
+address = addresses.for_patient_on(study_start_date) 
 
 dataset.msoa_code = address.msoa_code
 
