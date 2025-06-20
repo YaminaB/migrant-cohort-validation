@@ -1,0 +1,6 @@
+{
+    "python.analysis.extraPaths": [
+        ".devcontainer/ehrql-main/",
+        "./analysis/1-create_cohorts"
+    ]
+}
