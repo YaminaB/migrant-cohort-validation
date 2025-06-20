@@ -9,7 +9,7 @@ from ehrql.tables.tpp import (
   clinical_events
 )
 
-from analysis.create_cohorts.codelists import all_migrant_codes, cob_migrant_codes, asylum_refugee_migrant_codes, interpreter_migrant_codes, ethnicity_codelist
+from analysis.create_cohorts.codelists import all_migrant_codes
 
 from analysis.create_cohorts.dataset_definition_full_study_cohort import dataset
 
@@ -23,6 +23,5 @@ migration_related_codes = (
 dataset.add_event_table(
   "migration_related_codes",
   date=migration_related_codes.date,
-  snomedct_code=migration_related_codes.snomedct_code,
-  ethnicity=dataset.ethnicity
+  snomedct_code=migration_related_codes.snomedct_code
 )
