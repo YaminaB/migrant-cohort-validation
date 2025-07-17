@@ -11,6 +11,8 @@ cob_migrant_codes = codelist_from_csv("codelists/user-YaminaB-born-outside-the-u
 
 asylum_refugee_migrant_codes = codelist_from_csv("codelists/user-YaminaB-asylum-seeker-or-refugee.csv", column="code")
 
+language_migrant_codes = codelist_from_csv("codelists/user-YaminaB-english-not-main-language.csv", column="code")
+
 interpreter_migrant_codes = codelist_from_csv("codelists/user-YaminaB-interpreter-required.csv", column="code")
 
 ethnicity_codelist =  codelist_from_csv(
