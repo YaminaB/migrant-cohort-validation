@@ -11,4 +11,4 @@ import numpy as np
 
 # read in data
 
-table = feather.read_table("output/my_file.arrow")
+table = feather.read_table("output/cohorts/migration_event_level_dataset/migration_related_codes.arrow")
